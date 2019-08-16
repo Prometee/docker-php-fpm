@@ -7,9 +7,6 @@ env:
   - VERSION=7.2-minimum PHP_VERSION=7.2 PHP_EXTRA_PECL_EXTENSIONS=
   - VERSION=7.2 PHP_VERSION=7.2
 
-install:
-  - git clone https://github.com/Prometee/docker-php-fpm.git .
-
 before_script:
   - env | sort
   - image="fluxaudio/php-fpm:$VERSION"
