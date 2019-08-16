@@ -20,6 +20,6 @@ after_script:
 
 deploy:
   provider: script
-  script: bash bin/docker_push
+  script: bash bin/docker_push.sh
   on:
     branch: master
