@@ -17,7 +17,6 @@ script:
       set -Eeuo pipefail
       set -x
       docker build -t "$image" .
-      test/run.sh "$image"
     )
 after_script:
   - docker images
