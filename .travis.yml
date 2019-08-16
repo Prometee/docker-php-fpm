@@ -16,7 +16,7 @@ before_script:
   - image="fluxaudio/php-fpm:$VERSION"
 
 script:
-  - docker build -t $image .
+  - docker build -t $image --build-arg PHP_VERSION=$PHP_VERSION .
   - docker run --rm $image php -i
 
 after_script:
