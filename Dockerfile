@@ -51,6 +51,12 @@ RUN set -xe; \
 RUN set -xe; \
     apk add --update --no-cache --virtual .build-deps \
             $PHPIZE_DEPS \
+            libxml2-dev \
+            icu-dev \
+            zlib-dev \
+            freetype-dev \
+            libjpeg-turbo-dev \
+            libpng-dev \
     && for pecl_ext in ${PHP_EXTRA_PECL_EXTENSIONS}; do \
         pecl install $pecl_ext; \
         docker-php-ext-enable ${pecl_ext%-[0-9.]*}; \
