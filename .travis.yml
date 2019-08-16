@@ -12,14 +12,14 @@ before_script:
   - image="fluxaudio/php-fpm:$VERSION"
 
 script:
-  - |
-    (
-      set -Eeuo pipefail
-      set -x
-      docker build -t \
-        --build-arg PHP_VERSION="$PHP_VERSION" \
-        --build-arg PHP_EXTRA_PECL_EXTENSIONS="$PHP_EXTRA_PECL_EXTENSIONS" \
-        .
-    )
+  - docker build -t $image --build-arg PHP_VERSION="$PHP_VERSION" --build-arg PHP_EXTRA_PECL_EXTENSIONS="$PHP_EXTRA_PECL_EXTENSIONS" .
+  - docker run --rm $image php -i
+
 after_script:
   - docker images
+
+deploy:
+  provider: script
+  script: bash bin/docker_push
+  on:
+    branch: master
