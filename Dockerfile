@@ -15,13 +15,13 @@ ENV PHP_EXTRA_PECL_EXTENSIONS ${PHP_EXTRA_PECL_EXTENSIONS}
 RUN apk add --update --no-cache --virtual .persistent-deps \
 		git \
 		icu-libs \
-		zlib
+		zlib \
+        libzip-dev
 RUN set -xe; \
 	apk add --update --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		libxml2-dev \
 		icu-dev \
-        libzip-dev \
 		zlib-dev \
 		freetype-dev \
         libjpeg-turbo-dev \
@@ -53,7 +53,6 @@ RUN set -xe; \
             $PHPIZE_DEPS \
             libxml2-dev \
             icu-dev \
-            libzip-dev \
             zlib-dev \
             freetype-dev \
             libjpeg-turbo-dev \
