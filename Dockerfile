@@ -12,16 +12,24 @@ ENV PHP_EXTRA_EXTENSIONS ${PHP_EXTRA_EXTENSIONS}
 ARG PHP_EXTRA_PECL_EXTENSIONS="xdebug apcu"
 ENV PHP_EXTRA_PECL_EXTENSIONS ${PHP_EXTRA_PECL_EXTENSIONS}
 
-RUN apk add --update --no-cache --virtual .persistent-deps \
+ARG COMPOSER_GLOBAL_REQUIREMENTS="hirak/prestissimo \
+    squizlabs/php_codesniffer=*"
+ENV COMPOSER_GLOBAL_REQUIREMENTS ${COMPOSER_GLOBAL_REQUIREMENTS}
+
+RUN set -xe; \
+    apk add --update --no-cache --virtual .persistent-deps \
 		git \
 		icu-libs \
 		zlib \
-        libzip-dev
-RUN set -xe; \
-	apk add --update --no-cache --virtual .build-deps \
+        libzip \
+        freetype \
+        libpng \
+        libjpeg-turbo \
+	&& apk add --update --no-cache --virtual .build-deps \
 		$PHPIZE_DEPS \
 		libxml2-dev \
 		icu-dev \
+		libzip-dev \
 		zlib-dev \
 		freetype-dev \
         libjpeg-turbo-dev \
@@ -37,31 +45,15 @@ RUN set -xe; \
 		pdo_mysql \
 		pcntl \
 	&& docker-php-ext-enable opcache \
-	&& apk del .build-deps \
-	&& apk add --update --no-cache \
-	    freetype \
-	    libpng \
-	    libjpeg-turbo
-
-RUN set -xe; \
-    for ext in ${PHP_EXTRA_EXTENSIONS}; do \
+	&& for ext in ${PHP_EXTRA_EXTENSIONS}; do \
         docker-php-ext-install $ext; \
-    done
-
-RUN set -xe; \
-    apk add --update --no-cache --virtual .build-deps \
-            $PHPIZE_DEPS \
-            libxml2-dev \
-            icu-dev \
-            zlib-dev \
-            freetype-dev \
-            libjpeg-turbo-dev \
-            libpng-dev \
+    done \
     && for pecl_ext in ${PHP_EXTRA_PECL_EXTENSIONS}; do \
         pecl install $pecl_ext; \
         docker-php-ext-enable ${pecl_ext%-[0-9.]*}; \
     done \
-    && apk del .build-deps
+	&& apk del .build-deps
+
 
 COPY --from=0 /usr/bin/composer /usr/bin/composer
 
@@ -69,8 +61,9 @@ COPY --from=0 /usr/bin/composer /usr/bin/composer
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
 # Speedup composer
-RUN composer global require "hirak/prestissimo" "squizlabs/php_codesniffer=*"
+RUN composer global require $COMPOSER_GLOBAL_REQUIREMENTS
 
+# Allow saving of sh history and composer/git cache
 VOLUME /root
 
 WORKDIR ${PHP_ROOT}
