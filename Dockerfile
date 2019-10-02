@@ -41,6 +41,7 @@ RUN set -xe; \
 	&& docker-php-ext-install \
 	    soap \
 		intl \
+		gettext \
 		zip \
 		pdo_mysql \
 		pcntl \
