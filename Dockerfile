@@ -21,6 +21,7 @@ RUN set -xe; \
 		git \
 		icu-libs \
 		zlib \
+		gettext \
         libzip \
         freetype \
         libpng \
