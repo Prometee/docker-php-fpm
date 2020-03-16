@@ -37,7 +37,7 @@ RUN set -xe; \
                 libpng-dev \
 		gettext-dev \
     && docker-php-ext-configure \
-        gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
+        gd --with-freetype --with-jpeg \
 	&& docker-php-ext-install \
 		-j"$(getconf _NPROCESSORS_ONLN)" gd \
 	&& docker-php-ext-install \
