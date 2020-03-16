@@ -16,6 +16,19 @@ ARG COMPOSER_GLOBAL_REQUIREMENTS="hirak/prestissimo \
     squizlabs/php_codesniffer=*"
 ENV COMPOSER_GLOBAL_REQUIREMENTS ${COMPOSER_GLOBAL_REQUIREMENTS}
 
+
+ENV GD_CONFIGURE_OPTIONS "--with-freetype-dir=/usr/include/ \
+    --with-jpeg-dir=/usr/include/ \
+    --with-png-dir=/usr/include/ \
+    --with-webp-dir=/usr/include/"
+
+RUN if [ "${PHP_VERSION}" = "7.4" ]; \
+    then export GD_CONFIGURE_OPTIONS="--enable-gd \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp"; \
+    fi
+
 RUN set -xe; \
     apk add --update --no-cache --virtual .persistent-deps \
 		git \
@@ -26,8 +39,9 @@ RUN set -xe; \
         freetype \
         libpng \
         libjpeg-turbo \
+        libwebp-dev \
 	&& apk add --update --no-cache --virtual .build-deps \
-		$PHPIZE_DEPS \
+		${PHPIZE_DEPS} \
 		libxml2-dev \
 		icu-dev \
 		libzip-dev \
@@ -37,7 +51,7 @@ RUN set -xe; \
                 libpng-dev \
 		gettext-dev \
     && docker-php-ext-configure \
-        gd --with-freetype --with-jpeg \
+        gd ${GD_CONFIGURE_OPTIONS} \
 	&& docker-php-ext-install \
 		-j"$(getconf _NPROCESSORS_ONLN)" gd \
 	&& docker-php-ext-install \
@@ -56,7 +70,6 @@ RUN set -xe; \
         docker-php-ext-enable ${pecl_ext%-[0-9.]*}; \
     done \
 	&& apk del .build-deps
-
 
 COPY --from=0 /usr/bin/composer /usr/bin/composer
 
