@@ -16,17 +16,15 @@ ARG COMPOSER_GLOBAL_REQUIREMENTS="hirak/prestissimo \
     squizlabs/php_codesniffer=*"
 ENV COMPOSER_GLOBAL_REQUIREMENTS ${COMPOSER_GLOBAL_REQUIREMENTS}
 
-
-ENV GD_CONFIGURE_OPTIONS "--with-freetype-dir=/usr/include/ \
-    --with-jpeg-dir=/usr/include/ \
-    --with-png-dir=/usr/include/ \
-    --with-webp-dir=/usr/include/"
-
-RUN if [ "${PHP_VERSION}" = "7.4" ]; \
+RUN if [ "${PHP_VERSION}" == "7.4" ]; \
     then export GD_CONFIGURE_OPTIONS="--enable-gd \
         --with-freetype \
         --with-jpeg \
         --with-webp"; \
+    else export GD_CONFIGURE_OPTIONS="--with-freetype-dir=/usr/include/ \
+        --with-jpeg-dir=/usr/include/ \
+        --with-png-dir=/usr/include/ \
+        --with-webp-dir=/usr/include/"; \
     fi
 
 RUN set -xe; \
