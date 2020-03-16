@@ -21,6 +21,7 @@ RUN set -xe; \
 		git \
 		icu-libs \
 		zlib \
+		gettext \
         libzip \
         freetype \
         libpng \
@@ -32,8 +33,9 @@ RUN set -xe; \
 		libzip-dev \
 		zlib-dev \
 		freetype-dev \
-        libjpeg-turbo-dev \
-        libpng-dev \
+                libjpeg-turbo-dev \
+                libpng-dev \
+		gettext-dev \
     && docker-php-ext-configure \
         gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ --with-png-dir=/usr/include/ \
 	&& docker-php-ext-install \
@@ -41,6 +43,7 @@ RUN set -xe; \
 	&& docker-php-ext-install \
 	    soap \
 		intl \
+		gettext \
 		zip \
 		pdo_mysql \
 		pcntl \
