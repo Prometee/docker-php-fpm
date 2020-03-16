@@ -16,17 +16,6 @@ ARG COMPOSER_GLOBAL_REQUIREMENTS="hirak/prestissimo \
     squizlabs/php_codesniffer=*"
 ENV COMPOSER_GLOBAL_REQUIREMENTS ${COMPOSER_GLOBAL_REQUIREMENTS}
 
-RUN if [ "${PHP_VERSION}" == "7.4" ]; \
-    then export GD_CONFIGURE_OPTIONS="--enable-gd \
-        --with-freetype \
-        --with-jpeg \
-        --with-webp"; \
-    else export GD_CONFIGURE_OPTIONS="--with-freetype-dir=/usr/include/ \
-        --with-jpeg-dir=/usr/include/ \
-        --with-png-dir=/usr/include/ \
-        --with-webp-dir=/usr/include/"; \
-    fi
-
 RUN set -xe; \
     apk add --update --no-cache --virtual .persistent-deps \
 		git \
@@ -48,8 +37,17 @@ RUN set -xe; \
                 libjpeg-turbo-dev \
                 libpng-dev \
 		gettext-dev \
-    && docker-php-ext-configure \
-        gd ${GD_CONFIGURE_OPTIONS} \
+	&& if [ "${PHP_VERSION}" == "7.4" ]; \
+       then docker-php-ext-configure gd --enable-gd \
+            --with-freetype \
+            --with-jpeg \
+            --with-webp; \
+       else docker-php-ext-configure gd \
+            --with-freetype-dir=/usr/include/ \
+            --with-jpeg-dir=/usr/include/ \
+            --with-png-dir=/usr/include/ \
+            --with-webp-dir=/usr/include/; \
+       fi \
 	&& docker-php-ext-install \
 		-j"$(getconf _NPROCESSORS_ONLN)" gd \
 	&& docker-php-ext-install \
