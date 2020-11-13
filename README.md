@@ -33,8 +33,5 @@ Optional PECL extensions
 Composer
 --- 
 
-Globally installed with :
-
- - hirak/prestissimo
- - squizlabs/php_codesniffer
+Globally installed with no extra packages
  
