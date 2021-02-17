@@ -36,7 +36,7 @@ RUN set -xe; \
                 libjpeg-turbo-dev \
                 libpng-dev \
 		gettext-dev \
-	&& if [ "${PHP_VERSION:0:3}" == "7.4" ]; \
+	&& if [ "${PHP_VERSION:0:3}" != "7.3" ]; \
        then docker-php-ext-configure gd --enable-gd \
             --with-freetype \
             --with-jpeg \
