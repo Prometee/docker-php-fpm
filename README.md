@@ -1,5 +1,5 @@
-[![Build Status](https://travis-ci.org/Prometee/docker-php-fpm.svg?branch=master)](https://travis-ci.org/Prometee/docker-php-fpm)
-[![](https://images.microbadger.com/badges/image/fluxaudio/php-fpm.svg)](https://microbadger.com/images/fluxaudio/php-fpm "Get your own image badge on microbadger.com")
+[![Build Status][ico-github-actions]][link-github-actions]
+[![Docker][ico-microbadger]][link-microbadger]
 
 Alpine PHP FPM + composer
 --
@@ -34,4 +34,9 @@ Composer
 --- 
 
 Globally installed with no extra packages
- 
+
+[ico-github-actions]: https://github.com/Prometee/docker-php-fpm/workflows/Build/badge.svg
+[ico-microbadger]: https://images.microbadger.com/badges/image/fluxaudio/php-fpm.svg
+
+[link-github-actions]: https://github.com/Prometee/docker-php-fpm/actions?query=workflow%3A"Build"
+[link-microbadger]: https://microbadger.com/images/fluxaudio/php-fpm

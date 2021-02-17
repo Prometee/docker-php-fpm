@@ -1,0 +1,49 @@
+name: Build
+
+on:
+    push: ~
+    pull_request: ~
+    release:
+        types: [created]
+    schedule:
+        -
+            cron: "0 1 * * 6" # Run at 1am every Saturday
+
+jobs:
+    tests:
+        runs-on: ubuntu-latest
+
+        name: "VERSION ${{ matrix.php }}${{ matrix.version }}"
+
+        strategy:
+            fail-fast: false
+            matrix:
+                php: [7.3, 7.4]
+                version: ['', '-minimum']
+
+        env:
+            DOCKER_IMAGE: "fluxaudio/php-fpm:${{ matrix.php }}${{ matrix.version }}"
+            PHP_VERSION: ${{ matrix.php }}
+            VERSION: ${{ matrix.version }}
+
+        steps:
+            -
+                name: Set PHP pecl extra extensions (version === '')
+                if: env.version == ''
+                env:
+                    PHP_EXTRA_PECL_EXTENSIONS: xdebug apcu
+
+            -
+                uses: actions/checkout@v2
+
+            -
+                name: Docker build
+                run: docker build -t $DOCKER_IMAGE --build-arg PHP_VERSION="$PHP_VERSION" --build-arg PHP_EXTRA_PECL_EXTENSIONS="$PHP_EXTRA_PECL_EXTENSIONS" .
+
+            -
+                name: Display php version
+                run: docker run --rm $DOCKER_IMAGE php -i
+
+            -
+                name: Display docker images
+                run: docker images
