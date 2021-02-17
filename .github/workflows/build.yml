@@ -30,6 +30,7 @@ jobs:
             -
                 name: Set PHP pecl extra extensions (version === '')
                 if: env.version == ''
+                run: echo "PHP_EXTRA_PECL_EXTENSIONS = xdebug apcu"
                 env:
                     PHP_EXTRA_PECL_EXTENSIONS: xdebug apcu
 
