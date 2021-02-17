@@ -29,7 +29,7 @@ jobs:
         steps:
             -
                 name: Set PHP pecl extra extensions (version === "")
-                if: matrix.version == ""
+                if: matrix.version == ''
                 run: echo "$PHP_EXTRA_PECL_EXTENSIONS for ${ matrix.version }"
                 env:
                     PHP_EXTRA_PECL_EXTENSIONS: xdebug apcu
