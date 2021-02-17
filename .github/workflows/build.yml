@@ -23,14 +23,9 @@ jobs:
 
         env:
             DOCKER_TAG: "fluxaudio/php-fpm:${{ matrix.php }}${{ matrix.version }}"
+            PHP_EXTRA_PECL_EXTENSIONS: ${{ matrix.version == '' && 'xdebug apcu' || '' }}
 
         steps:
-            -
-                name: Set PHP pecl extra extensions (version === "")
-                if: matrix.version == ''
-                env:
-                    PHP_EXTRA_PECL_EXTENSIONS: xdebug apcu
-                run: echo "$PHP_EXTRA_PECL_EXTENSIONS for ${{ matrix.version }}"
 
             -
                 uses: actions/checkout@v2
