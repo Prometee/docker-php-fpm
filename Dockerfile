@@ -50,8 +50,6 @@ RUN set -xe; \
 	&& docker-php-ext-install \
 		-j"$(getconf _NPROCESSORS_ONLN)" gd \
 	&& docker-php-ext-install \
-	    soap \
-	    xmlrpc \
 		intl \
 		gettext \
 		zip \

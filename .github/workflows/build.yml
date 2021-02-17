@@ -23,12 +23,20 @@ jobs:
 
         env:
             DOCKER_TAG: "fluxaudio/php-fpm:${{ matrix.php }}${{ matrix.version }}"
-            PHP_EXTRA_PECL_EXTENSIONS: ${{ matrix.version == '' && 'xdebug apcu' || '' }}
+            PHP_EXTRA_EXTENSIONS: ''
+            PHP_EXTRA_PECL_EXTENSIONS: ''
 
         steps:
 
             -
                 uses: actions/checkout@v2
+
+            -
+                name: Set extensions
+                if: matrix.version == ''
+                env:
+                    PHP_EXTRA_EXTENSIONS: ${{ matrix.php >= 8.0 && 'soap' || 'soap xmlrpc' }}
+                    PHP_EXTRA_PECL_EXTENSIONS: ${{ matrix.php >= 8.0 && 'xmlrpc xdebug apcu' || '' }}
 
             -
                 name: Set up QEMU
@@ -51,6 +59,7 @@ jobs:
                     tags: ${{ env.DOCKER_TAG }}
                     build-args: |
                         PHP_VERSION=${{ matrix.php }}
+                        PHP_EXTRA_EXTENSIONS=${{ env.PHP_EXTRA_EXTENSIONS }}
                         PHP_EXTRA_PECL_EXTENSIONS=${{ env.PHP_EXTRA_PECL_EXTENSIONS }}
             -
                 name: Image digest
