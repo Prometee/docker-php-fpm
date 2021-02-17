@@ -37,6 +37,9 @@ jobs:
                 env:
                     PHP_EXTRA_EXTENSIONS: ${{ matrix.php >= 8.0 && 'soap' || 'soap xmlrpc' }}
                     PHP_EXTRA_PECL_EXTENSIONS: ${{ matrix.php >= 8.0 && 'xmlrpc xdebug apcu' || '' }}
+                run: |
+                    echo PHP ${{ matrix.php }} extra extensions: $PHP_EXTRA_EXTENSIONS
+                    echo PHP ${{ matrix.php }} PECL extra extensions: $PHP_EXTRA_PECL_EXTENSIONS
 
             -
                 name: Set up QEMU
