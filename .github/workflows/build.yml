@@ -13,18 +13,47 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "VERSION ${{ matrix.php }}${{ matrix.version }}"
+        name: "VERSION ${{ matrix.php }}${{ matrix.version }}, exts: ${{ matrix.php_extra_extensions }}, pecl exts : ${{ matrix.php_extra_pecl_extensions }}"
 
         strategy:
             fail-fast: false
             matrix:
-                php: [7.3, 7.4, 8.0]
-                version: ['', '-minimum']
+                php:
+                    - 7.3
+                    - 7.4
+                    - 8.0
+                version:
+                    - ''
+                    - '-minimum'
+                include:
+                    -
+                        php: [7.3, 7.4]
+                        version: ''
+                        php_extra_extensions: 'soap xmlrpc'
+                        php_extra_pecl_extensions: 'xdebug apcu'
+
+                    -
+                      php: [ 7.3, 7.4 ]
+                      version: '-minimum'
+                      php_extra_extensions: ''
+                      php_extra_pecl_extensions: ''
+
+                    -
+                        php: 8.0
+                        version: ''
+                        php_extra_extensions: 'soap'
+                        php_extra_pecl_extensions: 'xmlrpc xdebug apcu'
+
+                    -
+                        php: 8.0
+                        version: '-minimum'
+                        php_extra_extensions: ''
+                        php_extra_pecl_extensions: ''
 
         env:
             DOCKER_TAG: "fluxaudio/php-fpm:${{ matrix.php }}${{ matrix.version }}"
-            PHP_EXTRA_EXTENSIONS: ${{ (matrix.version == '' && matrix.php >= 8.0) && 'soap' || 'soap xmlrpc' }}
-            PHP_EXTRA_PECL_EXTENSIONS: ${{ (matrix.version == '' && matrix.php >= 8.0) && 'xmlrpc xdebug apcu' || '' }}
+            PHP_EXTRA_EXTENSIONS: ${{ matrix.php_extra_extensions }}
+            PHP_EXTRA_PECL_EXTENSIONS: ${{ matrix.php_extra_pecl_extensions }}
 
         steps:
 
