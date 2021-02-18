@@ -71,7 +71,6 @@ COPY --from=0 /usr/bin/composer /usr/bin/composer
 # https://getcomposer.org/doc/03-cli.md#composer-allow-superuser
 ENV COMPOSER_ALLOW_SUPERUSER=1
 
-# Speedup composer
 RUN composer global require $COMPOSER_GLOBAL_REQUIREMENTS
 
 # Allow saving of sh history and composer/git cache
