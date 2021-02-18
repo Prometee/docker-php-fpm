@@ -17,14 +17,19 @@ Bundled extensions
 ---
 
  - gd
- - soap
  - intl
  - zip
  - pdo_mysql
  - pcntl
  - opcache
 
-Optional PECL extensions
+Additional extensions (not available in '*-minimum' images)
+---
+
+ - soap
+ - xmlrpc (Since PHP >=8 it becomes a PECL extension)
+
+Optional PECL extensions (not available in '*-minimum' images)
 ---
 
  - xdebug
