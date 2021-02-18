@@ -23,8 +23,8 @@ jobs:
 
         env:
             DOCKER_TAG: "fluxaudio/php-fpm:${{ matrix.php }}${{ matrix.version }}"
-            PHP_EXTRA_EXTENSIONS: ${{ matrix.version == '' && matrix.php >= 8.0 && 'soap' || 'soap xmlrpc' }}
-            PHP_EXTRA_PECL_EXTENSIONS: ${{ matrix.version == '' && matrix.php >= 8.0 && 'xmlrpc xdebug apcu' || '' }}
+            PHP_EXTRA_EXTENSIONS: ${{ (matrix.version == '' && matrix.php >= 8.0) && 'soap' || 'soap xmlrpc' }}
+            PHP_EXTRA_PECL_EXTENSIONS: ${{ (matrix.version == '' && matrix.php >= 8.0) && 'xmlrpc xdebug apcu' || '' }}
 
         steps:
 
