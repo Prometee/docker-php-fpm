@@ -13,7 +13,7 @@ jobs:
     tests:
         runs-on: ubuntu-latest
 
-        name: "VERSION ${{ matrix.php }}${{ matrix.version }}, exts: ${{ matrix.php_extra_extensions }}, pecl exts : ${{ matrix.php_extra_pecl_extensions }}"
+        name: "VERSION ${{ matrix.php }}${{ matrix.version }}"
 
         strategy:
             fail-fast: false
@@ -27,16 +27,28 @@ jobs:
                     - '-minimum'
                 include:
                     -
-                        php: [7.3, 7.4]
+                        php: 7.3
                         version: ''
                         php_extra_extensions: 'soap xmlrpc'
                         php_extra_pecl_extensions: 'xdebug apcu'
 
                     -
-                      php: [ 7.3, 7.4 ]
-                      version: '-minimum'
-                      php_extra_extensions: ''
-                      php_extra_pecl_extensions: ''
+                        php: 7.3
+                        version: '-minimum'
+                        php_extra_extensions: ''
+                        php_extra_pecl_extensions: ''
+
+                    -
+                        php: 7.4
+                        version: ''
+                        php_extra_extensions: 'soap xmlrpc'
+                        php_extra_pecl_extensions: 'xdebug apcu'
+
+                    -
+                        php: 7.4
+                        version: '-minimum'
+                        php_extra_extensions: ''
+                        php_extra_pecl_extensions: ''
 
                     -
                         php: 8.0
