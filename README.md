@@ -22,6 +22,7 @@ Bundled extensions
  - pdo_mysql
  - pcntl
  - opcache
+ - exif
 
 Additional extensions (not available in '*-minimum' images)
 ---

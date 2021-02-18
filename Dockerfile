@@ -6,7 +6,7 @@ FROM php:${PHP_VERSION}-fpm-alpine
 ARG PHP_ROOT=/var/www/html
 ENV PHP_ROOT ${PHP_ROOT}
 
-ARG PHP_EXTRA_EXTENSIONS="exif"
+ARG PHP_EXTRA_EXTENSIONS=""
 ENV PHP_EXTRA_EXTENSIONS ${PHP_EXTRA_EXTENSIONS}
 
 ARG PHP_EXTRA_PECL_EXTENSIONS="xdebug apcu"
@@ -50,6 +50,7 @@ RUN set -xe; \
 	&& docker-php-ext-install \
 		-j"$(getconf _NPROCESSORS_ONLN)" gd \
 	&& docker-php-ext-install \
+		exif \
 		intl \
 		gettext \
 		zip \
