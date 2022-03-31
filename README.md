@@ -17,6 +17,7 @@ Bundled extensions
 ---
 
  - gd
+ - imagick
  - intl
  - zip
  - pdo_mysql
