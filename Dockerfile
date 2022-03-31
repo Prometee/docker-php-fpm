@@ -21,11 +21,12 @@ RUN set -xe; \
 		icu-libs \
 		zlib \
 		gettext \
-        libzip \
-        freetype \
-        libpng \
-        libjpeg-turbo \
-        libwebp-dev \
+		libzip \
+		freetype \
+		libpng \
+		libjpeg-turbo \
+		libwebp-dev \
+		imagemagick \
 	&& apk add --update --no-cache --virtual .build-deps \
 		${PHPIZE_DEPS} \
 		libxml2-dev \
@@ -36,6 +37,7 @@ RUN set -xe; \
                 libjpeg-turbo-dev \
                 libpng-dev \
 		gettext-dev \
+        	imagemagick-dev \
 	&& if [ "${PHP_VERSION:0:3}" != "7.3" ]; \
        then docker-php-ext-configure gd --enable-gd \
             --with-freetype \
@@ -60,6 +62,8 @@ RUN set -xe; \
 	&& for ext in ${PHP_EXTRA_EXTENSIONS}; do \
         docker-php-ext-install $ext; \
     done \
+    && (yes | pecl install imagick) \
+    && docker-php-ext-enable imagick \
     && for pecl_ext in ${PHP_EXTRA_PECL_EXTENSIONS}; do \
         pecl install $pecl_ext; \
         docker-php-ext-enable ${pecl_ext%-[0-9.]*}; \
