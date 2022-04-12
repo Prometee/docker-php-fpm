@@ -55,7 +55,7 @@ jobs:
                         php: 8.0
                         version: ''
                         php_extra_extensions: 'soap'
-                        php_extra_pecl_extensions: 'channel://pecl.php.net/xmlrpc-1.0.0RC3 xdebug apcu'
+                        php_extra_pecl_extensions: 'xmlrpc-1.0.0RC3 xdebug apcu'
 
                     -
                         php: 8.0
@@ -67,7 +67,7 @@ jobs:
                         php: 8.1
                         version: ''
                         php_extra_extensions: 'soap'
-                        php_extra_pecl_extensions: 'channel://pecl.php.net/xmlrpc-1.0.0RC3 xdebug apcu'
+                        php_extra_pecl_extensions: 'xmlrpc-1.0.0RC3 xdebug apcu'
 
                     -
                         php: 8.1
