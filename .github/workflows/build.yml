@@ -25,7 +25,6 @@ jobs:
                     - 8.2
                     - 8.3
                     - 8.4
-                    - 8.5
                 version:
                     - ''
                     - '-minimum'
@@ -86,18 +85,6 @@ jobs:
 
                     -
                         php: 8.4
-                        version: '-minimum'
-                        php_extra_extensions: ''
-                        php_extra_pecl_extensions: ''
-
-                    -
-                        php: 8.5
-                        version: ''
-                        php_extra_extensions: 'soap'
-                        php_extra_pecl_extensions: 'xmlrpc-1.0.0RC3 xdebug apcu'
-
-                    -
-                        php: 8.5
                         version: '-minimum'
                         php_extra_extensions: ''
                         php_extra_pecl_extensions: ''
